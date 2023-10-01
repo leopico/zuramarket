@@ -87,9 +87,9 @@
   box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
 }
 
-/* Sreens less than 720px */
+/* Additional CSS for screens less than 500px (mobile) */
 @media (max-width: 500px) {
   .navConnect {
-    display: none !important;
+    display: block !important;
   }
 }

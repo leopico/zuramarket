@@ -84,7 +84,7 @@ export default function ProfilePage() {
         >
           NFTs
         </h3>
-        <h3
+        {/* <h3
           className={`${styles.tab} 
         ${tab === "listings" ? styles.activeTab : ""}`}
           onClick={() => setTab("listings")}
@@ -97,13 +97,12 @@ export default function ProfilePage() {
           onClick={() => setTab("auctions")}
         >
           Auctions
-        </h3>
+        </h3> */}
       </div>
 
       <div
-        className={`${
-          tab === "nfts" ? styles.activeTabContent : styles.tabContent
-        }`}
+        className={`${tab === "nfts" ? styles.activeTabContent : styles.tabContent
+          }`}
       >
         <NFTGrid
           data={ownedNfts}
@@ -113,9 +112,8 @@ export default function ProfilePage() {
       </div>
 
       <div
-        className={`${
-          tab === "listings" ? styles.activeTabContent : styles.tabContent
-        }`}
+        className={`${tab === "listings" ? styles.activeTabContent : styles.tabContent
+          }`}
       >
         {loadingDirects ? (
           <p>Loading...</p>
@@ -129,9 +127,8 @@ export default function ProfilePage() {
       </div>
 
       <div
-        className={`${
-          tab === "auctions" ? styles.activeTabContent : styles.tabContent
-        }`}
+        className={`${tab === "auctions" ? styles.activeTabContent : styles.tabContent
+          }`}
       >
         {loadingAuctions ? (
           <p>Loading...</p>

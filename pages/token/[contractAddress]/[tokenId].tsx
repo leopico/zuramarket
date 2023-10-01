@@ -4,7 +4,6 @@ import {
   useContract,
   useContractEvents,
   useValidDirectListings,
-  useValidEnglishAuctions,
   Web3Button,
 } from "@thirdweb-dev/react";
 import React, { useState } from "react";
@@ -32,7 +31,6 @@ type Props = {
 const [randomColor1, randomColor2] = [randomColor(), randomColor()];
 
 export default function TokenPage({ nft, contractMetadata }: Props) {
-  const [bidValue, setBidValue] = useState<string>();
 
   // Connect to marketplace smart contract
   const { contract: marketplace, isLoading: loadingContract } = useContract(
@@ -50,11 +48,11 @@ export default function TokenPage({ nft, contractMetadata }: Props) {
     });
 
   // 2. Load if the NFT is for auction
-  const { data: auctionListing, isLoading: loadingAuction } =
-    useValidEnglishAuctions(marketplace, {
-      tokenContract: NFT_COLLECTION_ADDRESS,
-      tokenId: nft.metadata.id,
-    });
+  // const { data: auctionListing, isLoading: loadingAuction } =
+  //   useValidEnglishAuctions(marketplace, {
+  //     tokenContract: NFT_COLLECTION_ADDRESS,
+  //     tokenId: nft.metadata.id,
+  //   });
 
   // Load historical transfer events: TODO - more event types like sale
   const { data: transferEvents, isLoading: loadingTransferEvents } =
@@ -67,43 +65,39 @@ export default function TokenPage({ nft, contractMetadata }: Props) {
       },
     });
 
-  async function createBidOrOffer() {
-    let txResult;
-    if (!bidValue) {
-      toast(`Please enter a bid value`, {
-        icon: "❌",
-        style: toastStyle,
-        position: "bottom-center",
-      });
-      return;
-    }
+  // async function createBidOrOffer() {
+  //   let txResult;
+  //   if (!bidValue) {
+  //     toast(`Please enter a bid value`, {
+  //       icon: "❌",
+  //       style: toastStyle,
+  //       position: "bottom-center",
+  //     });
+  //     return;
+  //   }
 
-    if (auctionListing?.[0]) {
-      txResult = await marketplace?.englishAuctions.makeBid(
-        auctionListing[0].id,
-        bidValue
-      );
-    } else if (directListing?.[0]) {
-      txResult = await marketplace?.offers.makeOffer({
-        assetContractAddress: NFT_COLLECTION_ADDRESS,
-        tokenId: nft.metadata.id,
-        totalPrice: bidValue,
-      });
-    } else {
-      throw new Error("No valid listing found for this NFT");
-    }
+  //   if (auctionListing?.[0]) {
+  //     txResult = await marketplace?.englishAuctions.makeBid(
+  //       auctionListing[0].id,
+  //       bidValue
+  //     );
+  //   } else if (directListing?.[0]) {
+  //     txResult = await marketplace?.offers.makeOffer({
+  //       assetContractAddress: NFT_COLLECTION_ADDRESS,
+  //       tokenId: nft.metadata.id,
+  //       totalPrice: bidValue,
+  //     });
+  //   } else {
+  //     throw new Error("No valid listing found for this NFT");
+  //   }
 
-    return txResult;
-  }
+  //   return txResult;
+  // }
 
   async function buyListing() {
     let txResult;
 
-    if (auctionListing?.[0]) {
-      txResult = await marketplace?.englishAuctions.buyoutAuction(
-        auctionListing[0].id
-      );
-    } else if (directListing?.[0]) {
+    if (directListing?.[0]) {
       txResult = await marketplace?.directListings.buyFromListing(
         directListing[0].id,
         1
@@ -243,7 +237,7 @@ export default function TokenPage({ nft, contractMetadata }: Props) {
               <div className={styles.pricingInfo}>
                 <p className={styles.label}>Price</p>
                 <div className={styles.pricingValue}>
-                  {loadingContract || loadingDirect || loadingAuction ? (
+                  {loadingContract || loadingDirect ? (
                     <Skeleton width="120" height="24" />
                   ) : (
                     <>
@@ -252,38 +246,8 @@ export default function TokenPage({ nft, contractMetadata }: Props) {
                           {directListing[0]?.currencyValuePerToken.displayValue}
                           {" " + directListing[0]?.currencyValuePerToken.symbol}
                         </>
-                      ) : auctionListing && auctionListing[0] ? (
-                        <>
-                          {auctionListing[0]?.buyoutCurrencyValue.displayValue}
-                          {" " + auctionListing[0]?.buyoutCurrencyValue.symbol}
-                        </>
                       ) : (
                         "Not for sale"
-                      )}
-                    </>
-                  )}
-                </div>
-
-                <div>
-                  {loadingAuction ? (
-                    <Skeleton width="120" height="24" />
-                  ) : (
-                    <>
-                      {auctionListing && auctionListing[0] && (
-                        <>
-                          <p className={styles.label} style={{ marginTop: 12 }}>
-                            Bids starting from
-                          </p>
-
-                          <div className={styles.pricingValue}>
-                            {
-                              auctionListing[0]?.minimumBidCurrencyValue
-                                .displayValue
-                            }
-                            {" " +
-                              auctionListing[0]?.minimumBidCurrencyValue.symbol}
-                          </div>
-                        </>
                       )}
                     </>
                   )}
@@ -291,7 +255,7 @@ export default function TokenPage({ nft, contractMetadata }: Props) {
               </div>
             </div>
 
-            {loadingContract || loadingDirect || loadingAuction ? (
+            {loadingContract || loadingDirect ? (
               <Skeleton width="100%" height="164" />
             ) : (
               <>
@@ -314,47 +278,7 @@ export default function TokenPage({ nft, contractMetadata }: Props) {
                     });
                   }}
                 >
-                  Buy at asking price
-                </Web3Button>
-
-                <div className={`${styles.listingTimeContainer} ${styles.or}`}>
-                  <p className={styles.listingTime}>or</p>
-                </div>
-
-                <input
-                  className={styles.input}
-                  defaultValue={
-                    auctionListing?.[0]?.minimumBidCurrencyValue
-                      ?.displayValue || 0
-                  }
-                  type="number"
-                  step={0.000001}
-                  onChange={(e) => {
-                    setBidValue(e.target.value);
-                  }}
-                />
-
-                <Web3Button
-                  contractAddress={MARKETPLACE_ADDRESS}
-                  action={async () => await createBidOrOffer()}
-                  className={styles.btn}
-                  onSuccess={() => {
-                    toast(`Bid success!`, {
-                      icon: "✅",
-                      style: toastStyle,
-                      position: "bottom-center",
-                    });
-                  }}
-                  onError={(e) => {
-                    console.log(e);
-                    toast(`Bid failed!`, {
-                      icon: "❌",
-                      style: toastStyle,
-                      position: "bottom-center",
-                    });
-                  }}
-                >
-                  Place bid
+                  Buy
                 </Web3Button>
               </>
             )}

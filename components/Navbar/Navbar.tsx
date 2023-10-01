@@ -14,21 +14,18 @@ export function Navbar() {
     <div className={styles.navContainer}>
       <nav className={styles.nav}>
         <div className={styles.navLeft}>
-          <Link href="/" className={`${styles.homeLink} ${styles.navLeft}`}>
+          <Link href="https://zuraverse.xyz/" target="_blink" className={`${styles.homeLink} ${styles.navLeft} hidden sm:block`}>
             <Image
-              src="/logo.png"
-              width={48}
-              height={48}
+              src="/images/logo.png"
+              width={100}
+              height={50}
               alt="NFT marketplace sample logo"
             />
           </Link>
 
-          <div className={styles.navMiddle}>
-            <Link href="/buy" className={styles.link}>
-              Buy
-            </Link>
-            <Link href="/sell" className={styles.link}>
-              Sell
+          <div className={`${styles.navMiddle} hidden sm:block`}>
+            <Link href="/" className={styles.link}>
+              Marketplace
             </Link>
           </div>
         </div>
