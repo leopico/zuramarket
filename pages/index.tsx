@@ -89,11 +89,11 @@ const Home: NextPage = () => {
                 className="object-cover"
               />
             </div>
-
           </div>
         </section>
       </div>
       <TabSection />
+
     </>
   );
 };

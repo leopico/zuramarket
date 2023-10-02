@@ -14,21 +14,33 @@ export function Navbar() {
   return (
     <div className={`${styles.navContainer} container mx-auto pl-2`}>
       <nav className={styles.nav}>
-        <div className={styles.navLeft}>
-          <Link href="https://zuraverse.xyz/" target="_blink" className={`${styles.homeLink} ${styles.navLeft} hidden sm:block`}>
-            <Image
-              src="/images/logo.png"
-              width={200}
-              height={150}
-              alt="NFT marketplace sample logo"
-            />
-          </Link>
 
-          <div className={`${styles.navMiddle} hidden sm:block`}>
-            <Link href="/" className={styles.link}>
-              <span className="text-xl">Home</span>
-            </Link>
-          </div>
+        <div className={styles.navLeft}>
+          <Link href="/" passHref>
+            <div className={`${styles.homeLink} ${styles.navLeft} hidden sm:block`}>
+              <div className="flex flex-col items-center">
+                <div className="w-full text-center font-extrabold text-2xl tracking-tighter" style={{ marginBottom: '-0.1rem' }}>
+                  ZURAVERSE
+                </div>
+                <div className="w-full text-center text-lg font-extralight tracking-widest" style={{ marginTop: '-0.5rem' }}>
+                  MARKETPLACE
+                </div>
+              </div>
+            </div>
+          </Link>
+        </div>
+
+        <div className={`${styles.navMiddle} hidden sm:block`}>
+          <Link href="https://zuraverse.xyz/" target="_blink" className={styles.link}>
+            <div className={`${styles.homeLink} ${styles.navLeft} hidden sm:block`}>
+              <Image
+                src="/images/navbar_icon.jpg"
+                width={50}
+                height={50}
+                alt="NFT marketplace sample logo"
+              />
+            </div>
+          </Link>
         </div>
 
         <div className={styles.navRight}>

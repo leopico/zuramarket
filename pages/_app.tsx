@@ -6,6 +6,7 @@ import { NETWORK } from "../const/contractAddresses";
 import Head from "next/head";
 import "../styles/globals.css";
 import "../styles/global.css"
+import Footer from "../components/Footer/Footer";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -14,7 +15,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       activeChain={NETWORK}
     >
       <Head>
-        <title>Zuraverse Marketplace</title>
+        <title>HASH - Zuraverse</title>
         {/* Add any other metadata, meta tags, or links you need */}
         <meta name="description" content="H.A.C.K is the gateway to Zuraverse. H.A.C.K NFTs introduce Zuraverse to the Web3 audience.
 They are the stepping stone in the formation of Zuraverse." />
@@ -33,6 +34,7 @@ They are the stepping stone in the formation of Zuraverse." />
       <Navbar />
       {/* Render the actual component (page) */}
       <Component {...pageProps} />
+      <Footer />
     </ThirdwebProvider>
   );
 }
