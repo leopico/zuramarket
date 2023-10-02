@@ -32,6 +32,32 @@ const Tab = () => {
                         <span className="text-sm text-[#8454d8]">Zuraverse</span>
                     </div>
                 </Link>
+                <Link href="/buyzurahome">
+                    <div className="bg-[#24252d] p-1 lg:p-2 rounded space-y-2  cursor-pointer relative group">
+                        <div className="relative w-full h-52 rounded overflow-hidden">
+                            <Image
+                                alt="blog-img"
+                                src="/images/HACk1.jpg"
+                                fill
+                                className="object-cover"
+                            />
+                            <div
+                                className="absolute inset-0 flex items-center justify-center
+                                            opacity-0 group-hover:opacity-100 transition-opacity
+                                            ease-in-out duration-500
+                            ">
+                                <button className="bg-yellow-400 px-10 py-1 rounded-full
+                                 text-black font-semibold">
+                                    Mint now
+                                </button>
+                            </div>
+                        </div>
+                        <div>
+                            <span className="text-lg">Zuraverse House</span>
+                        </div>
+                        <span className="text-sm text-[#8454d8]">Zuraverse</span>
+                    </div>
+                </Link>
                 <div className="bg-[#24252d] p-1 lg:p-2 rounded space-y-2 cursor-pointer relative group">
                     <div className="relative w-full h-52 rounded overflow-hidden">
                         <Image
