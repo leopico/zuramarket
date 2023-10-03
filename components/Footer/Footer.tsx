@@ -7,6 +7,7 @@ import { BiLogoTelegram } from 'react-icons/bi';
 import { AiFillMediumSquare } from "react-icons/ai";
 import { BiLogoLinkedinSquare } from "react-icons/bi"
 import { useRouter } from "next/router";
+import styles from "./Footer.module.css";
 
 const Footer = () => {
     const router = useRouter();
@@ -34,10 +35,10 @@ const Footer = () => {
 
 
     return (
-        <footer className="bg-[#24252d]">
+        <footer className="container mx-auto">
             <div className="">
-                <ul className="flex flex-col md:flex-row space-y-2 md:space-y-0 justify-around items-center  py-7">
-                    <li>
+                <ul className="flex flex-col md:flex-row space-y-2 md:space-y-0 justify-between px-8 items-center  py-7">
+                    <li className={styles.footerImage}>
                         <Link href="https://zuraverse.xyz/" target="_blink">
                             <Image
                                 src="/images/logo.png"
@@ -82,7 +83,7 @@ const Footer = () => {
             <div className="border-t border-gray-600 container mx-auto" />
             <div className="px-2 py-9">
                 <div className="flex flex-col lg:flex-row justify-center lg:justify-between items-center space-y-2 lg:space-y-0">
-                    <h1>© 2023 Zuraverse. All rights reserved.</h1>
+                    <h1 className="text-gray-400">© 2023 Zuraverse. All rights reserved.</h1>
                     <div className="flex space-x-10 justify-between items-center text-sm sm:text-base text-[#b999ff] font-bold">
                         <h1>
                             <Link href="https://zuraverse.xyz/tnc/" target="_blink" className=" hover:text-hover-cus font-bold tracking-wider ">
